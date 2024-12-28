@@ -1,15 +1,13 @@
 <?php
 /*
 Plugin Name: Embed Can I Use
-Description: Add Can I Use support tables to your WordPress web site thanks to this shortcode. <code>[ ciu_embed ]</code>
+Description: Add Can I Use support tables to your WordPress web site thanks to this shortcode. Example: <code>[ciu_embed feature="audio" periods="-1,current,+1,+2"]</code>
 Author: Geoffrey Crofte
-Version: 1.0.0
+Version: 1.0.2
 Author URI: http://geoffrey.crofte.fr
 License: GPLv2 or later
 Text domain: embed-can-i-use
 Domain Path: /languages
-
-
 
 Copyright 2016  Geoffrey Crofte  (email : support@creativejuiz.com)
 Embedded makes possible thanks to the work done at http://caniuse.bitsofco.de/
@@ -44,10 +42,10 @@ function ciue_multilang() {
 	load_plugin_textdomain( 'embed-can-i-use', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 
-
 /**
  * New ciu_embed shortcode
  *
+ * @since  1.0.2 Better security with wp_kses_post and other escaping functions
  * @since  1.0.0
  * @author Geoffrey
  */
@@ -76,12 +74,12 @@ function add_ciue_shortcode( $attr ) {
 		$periods .= 'current';
 	}
 
-	$link_text = apply_filters( 'ciue_link_text', '<p>Can I Use ' . $feature . '?</p>', $feature );
+	$link_text = apply_filters( 'ciue_link_text', 'Can I Use ' . $feature . '?', $feature );
 	$link_attr = apply_filters( 'ciue_link_target', ' target="_blank"' );
 
-	$cui = '<div class="ciu_embed" data-feature="' . $feature . '" data-periods="' . $periods . '"><a href="http://caniuse.com/#feat=' . $feature . '"' . $link_attr . '>' . $link_text . '</a></div>';
+	$cui = '<div class="ciu_embed" data-feature="' . esc_attr( $feature ) . '" data-periods="' . esc_attr( $periods ) . '"><a href="https://caniuse.com/#feat=' . $feature . '"' . $link_attr . '>' . wp_kses_post( $link_text ) . '</a></div>';
 
-	wp_enqueue_script( 'can_i_use_embedded', '//cdn.jsdelivr.net/caniuse-embed/' . ECIU_SCRIPT_VERSION . '/caniuse-embed.min.js', array(), ECIU_SCRIPT_VERSION, true );
+	wp_enqueue_script( 'can_i_use_embedded', '//cdn.jsdelivr.net/caniuse-embed/' . ECIU_SCRIPT_VERSION . '/caniuse-embed.min.js', array(), ECIU_SCRIPT_VERSION, array( 'in_footer' => true ) );
 
 	return $cui;
 

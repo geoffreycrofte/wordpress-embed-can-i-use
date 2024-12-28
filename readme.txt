@@ -3,7 +3,7 @@ Contributors: CreativeJuiz
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=P39NJPCWVXGDY&lc=FR&item_name=Embed%20Can%20I%20Use%20%2d%20WP%20Plugin&item_number=%23wp%2dciue&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: embed, embedded, Can I use, CIU, table, browsers, support
 Requires at least: 4.0
-Tested up to: 4.5.1
+Tested up to: 6.7.1
 Stable tag: 1.0.0
 
 Add Can I Use support tables to your WordPress web site thanks to this shortcode.
